@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:id="@+id/rootView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_12sdp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/ivLogo"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_70sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="@dimen/_40sdp"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_logo"
+                    app:riv_corner_radius="@dimen/_7sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <LinearLayout
+                    android:id="@+id/llHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/ivLogo">
+
+                    <include
+                        android:id="@+id/header"
+                        layout="@layout/layout_header" />
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvEmailAddress"
+                    style="@style/_tv14BlackMedium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_email_address"
+                    android:textAlignment="textStart"
+                    app:layout_constraintBottom_toBottomOf="@id/edtEmailAddress"
+                    app:layout_constraintEnd_toStartOf="@+id/edtEmailAddress"
+                    app:layout_constraintHorizontal_weight="3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/edtEmailAddress" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edtEmailAddress"
+                    style="@style/_edtAuth"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:background="@drawable/bg_white2"
+                    android:elevation="@dimen/_4sdp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/hint_email_address"
+                    android:imeOptions="actionNext"
+                    android:includeFontPadding="false"
+                    android:inputType="textEmailAddress"
+                    android:padding="@dimen/_8sdp"
+                    android:singleLine="true"
+                    android:text="@={updateMyDetailsViewModel._emailAddress}"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/ivEditEmailAddress"
+                    app:layout_constraintHorizontal_weight="6"
+                    app:layout_constraintStart_toEndOf="@id/tvEmailAddress"
+                    app:layout_constraintTop_toBottomOf="@+id/llHeader" />
+
+                <ImageView
+                    android:id="@+id/ivEditEmailAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:src="@drawable/ic_edit"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@id/edtEmailAddress"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@id/edtEmailAddress"
+                    app:layout_constraintTop_toTopOf="@+id/edtEmailAddress" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPassowrd"
+                    style="@style/_tv14BlackMedium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_password2"
+                    android:textAlignment="textStart"
+                    app:layout_constraintBottom_toBottomOf="@id/edtPassword"
+                    app:layout_constraintEnd_toStartOf="@+id/edtPassword"
+                    app:layout_constraintHorizontal_weight="3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/edtPassword" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edtPassword"
+                    style="@style/_edtAuth"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:background="@drawable/bg_white2"
+                    android:elevation="@dimen/_4sdp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/hint_password"
+                    android:imeOptions="actionNext"
+                    android:includeFontPadding="false"
+                    android:inputType="textPassword"
+                    android:padding="@dimen/_8sdp"
+                    android:singleLine="true"
+                    android:text="@={updateMyDetailsViewModel._password}"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toStartOf="@id/ivEditPassword"
+                    app:layout_constraintHorizontal_weight="6"
+                    app:layout_constraintStart_toEndOf="@id/tvEmailAddress"
+                    app:layout_constraintTop_toBottomOf="@+id/edtEmailAddress" />
+
+                <ImageView
+                    android:id="@+id/ivEditPassword"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:visibility="gone"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:src="@drawable/ic_edit"
+                    app:layout_constraintBottom_toBottomOf="@id/edtPassword"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@id/edtPassword"
+                    app:layout_constraintTop_toTopOf="@+id/edtPassword" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAddress"
+                    style="@style/_tv14BlackMedium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_address"
+                    android:textAlignment="textStart"
+                    app:layout_constraintBottom_toBottomOf="@id/edtAddress"
+                    app:layout_constraintEnd_toStartOf="@+id/edtAddress"
+                    app:layout_constraintHorizontal_weight="3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/edtAddress" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edtAddress"
+                    style="@style/_edtAuth"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:background="@drawable/bg_white2"
+                    android:elevation="@dimen/_4sdp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/hint_address"
+                    android:imeOptions="actionNext"
+                    android:includeFontPadding="false"
+                    android:inputType="text"
+                    android:padding="@dimen/_8sdp"
+                    android:text="@={updateMyDetailsViewModel._address}"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toStartOf="@id/ivEditAddress"
+                    app:layout_constraintHorizontal_weight="6"
+                    app:layout_constraintStart_toEndOf="@id/tvAddress"
+                    app:layout_constraintTop_toBottomOf="@+id/edtPassword" />
+
+                <ImageView
+                    android:id="@+id/ivEditAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:visibility="gone"
+                    android:src="@drawable/ic_edit"
+                    app:layout_constraintBottom_toBottomOf="@id/edtAddress"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@id/edtAddress"
+                    app:layout_constraintTop_toTopOf="@+id/edtAddress" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPhoneno"
+                    style="@style/_tv14BlackMedium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_phone_no"
+                    android:textAlignment="textStart"
+                    app:layout_constraintBottom_toBottomOf="@id/edtPhoneNumber"
+                    app:layout_constraintEnd_toStartOf="@+id/edtPhoneNumber"
+                    app:layout_constraintHorizontal_weight="3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/edtPhoneNumber" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edtPhoneNumber"
+                    style="@style/_edtAuth"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:background="@drawable/bg_white2"
+                    android:elevation="@dimen/_4sdp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/hint_phoneno"
+                    android:imeOptions="actionNext"
+                    android:includeFontPadding="false"
+                    android:inputType="number"
+                    android:padding="@dimen/_8sdp"
+                    android:singleLine="true"
+                    android:text="@={updateMyDetailsViewModel._phoneNumber}"
+                    android:visibility="visible"
+                   app:layout_constraintEnd_toStartOf="@id/ivEditPhoneNumber"
+                    app:layout_constraintHorizontal_weight="6"
+                    app:layout_constraintStart_toEndOf="@id/tvPhoneno"
+                    app:layout_constraintTop_toBottomOf="@+id/edtAddress" />
+
+
+
+                <ImageView
+                    android:id="@+id/ivEditPhoneNumber"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:src="@drawable/ic_edit"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@id/edtPhoneNumber"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@id/edtPhoneNumber"
+                    app:layout_constraintTop_toTopOf="@+id/edtPhoneNumber" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvDob"
+                    style="@style/_tv14BlackMedium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_dob"
+                    android:textAlignment="textStart"
+                    app:layout_constraintBottom_toBottomOf="@id/edtDob"
+                    app:layout_constraintEnd_toStartOf="@+id/edtDob"
+                    app:layout_constraintHorizontal_weight="3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/edtDob" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edtDob"
+                    style="@style/_edtAuth"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:background="@drawable/bg_white2"
+                    android:elevation="@dimen/_4sdp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/hint_dob"
+                    android:imeOptions="actionNext"
+                    android:includeFontPadding="false"
+                    android:inputType="text"
+                    android:padding="@dimen/_8sdp"
+                    android:singleLine="true"
+                    android:text="@={updateMyDetailsViewModel._dob}"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toStartOf="@+id/ivEditDob"
+                    app:layout_constraintHorizontal_weight="6"
+                    app:layout_constraintStart_toEndOf="@id/tvDob"
+                    app:layout_constraintTop_toBottomOf="@+id/edtPhoneNumber" />
+
+                <ImageView
+                    android:id="@+id/ivEditDob"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:src="@drawable/ic_edit"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@id/edtDob"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@id/edtDob"
+                    app:layout_constraintTop_toTopOf="@+id/edtDob" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvQuantasFfNumber"
+                    style="@style/_tv14BlackMedium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_quantus_ff_no"
+                    android:textAlignment="textStart"
+                    app:layout_constraintBottom_toBottomOf="@id/edtQuantusffnumber"
+                    app:layout_constraintEnd_toStartOf="@+id/edtQuantusffnumber"
+                    app:layout_constraintHorizontal_weight="3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/edtQuantusffnumber" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edtQuantusffnumber"
+                    style="@style/_edtAuth"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:background="@drawable/bg_white2"
+                    android:elevation="@dimen/_4sdp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/hint_quantus"
+                    android:imeOptions="actionNext"
+                    android:includeFontPadding="false"
+                    android:inputType="number"
+                    android:padding="@dimen/_8sdp"
+                    android:singleLine="true"
+                    android:text="@={updateMyDetailsViewModel._ffnumber}"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toStartOf="@id/ivEditFF"
+                    app:layout_constraintHorizontal_weight="6"
+                    app:layout_constraintStart_toEndOf="@id/tvQuantasFfNumber"
+                    app:layout_constraintTop_toBottomOf="@+id/edtDob" />
+
+                <ImageView
+                    android:id="@+id/ivEditFF"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:visibility="gone"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:src="@drawable/ic_edit"
+                    app:layout_constraintBottom_toBottomOf="@id/edtQuantusffnumber"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@id/edtQuantusffnumber"
+                    app:layout_constraintTop_toTopOf="@+id/edtQuantusffnumber" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSave"
+                    style="@style/_btnNormal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_40sdp"
+                    android:elevation="@dimen/_5sdp"
+                    android:paddingStart="@dimen/_40sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_40sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:text="@string/text_save"
+                    app:backgroundTint="@color/colorAccent"
+                    app:cornerRadius="@dimen/_10sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/edtQuantusffnumber"
+                    app:rippleColor="@color/colorAccent" />
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+
+    <data>
+
+        <variable
+            name="updateMyDetailsViewModel"
+            type="com.app.datwdt.viewmodel.main.UpdateMyDetailsViewModel" />
+
+    </data>
+</layout>

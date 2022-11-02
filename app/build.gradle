@@ -1,0 +1,146 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-android-extensions'
+//    id 'com.google.firebase.crashlytics'
+//    id 'com.google.gms.google-services'
+
+}
+
+android {
+    signingConfigs {
+        release {
+        storeFile file('F:\\Android\\WorkSpace\\Android\\datw-android\\keystore\\tourdirector.jks')
+            storePassword 'tourdirector'
+            keyAlias 'tourdirector'
+            keyPassword 'tourdirector'
+        }
+    }
+    compileSdk 31
+
+    defaultConfig {
+        applicationId "com.app.datw"
+        minSdk 21
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.release
+    }
+
+    buildTypes {
+        release {
+            buildConfigField "String", "baseUrl", productionUrl
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            buildConfigField "String", "baseUrl", testUrl
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+ext {
+    daggerVersion = "2.40.5"
+    kotlin_version = '1.3.70'
+}
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+
+    //cardview
+    implementation "androidx.cardview:cardview:1.0.0"
+    implementation "androidx.legacy:legacy-support-v4:1.0.0"
+
+    //recyclerview
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
+
+    //Android architecture components - Kotlin version - Coroutines
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
+
+    //Scalable dp
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+    implementation 'com.intuit.ssp:ssp-android:1.0.6'
+
+    //Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
+
+    //dagger
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "com.google.dagger:dagger-android:$daggerVersion"
+    implementation 'com.google.dagger:dagger-android-support:2.27'
+    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    kaptAndroidTest "com.google.dagger:dagger-compiler:$daggerVersion"
+
+    //MultiDex
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    //ccp
+    implementation 'com.hbb20:ccp:2.6.0'
+
+    /*RxJava lib*/
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.19'
+
+
+    implementation 'com.github.bumptech.glide:glide:4.13.1'
+    implementation 'com.github.bumptech.glide:annotations:4.13.1'
+    implementation "com.github.bumptech.glide:okhttp3-integration:4.11.0"
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+
+    //round imageview
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+
+
+
+//    // Add the dependency for the Firebase SDK for Google Analytics
+//    implementation 'com.google.firebase:firebase-auth:21.0.2'
+//    implementation 'com.google.firebase:firebase-core:20.1.1'
+//    implementation 'com.google.firebase:firebase-crashlytics-ktx:18.2.9'
+//    implementation 'com.google.firebase:firebase-analytics-ktx:20.1.1'
+//    implementation 'com.google.firebase:firebase-database:20.0.4'
+//    implementation 'com.google.firebase:firebase-messaging-ktx:23.0.2'
+
+
+    //file picker.
+    implementation 'com.github.jaiselrahman:FilePicker:1.3.2'
+
+    implementation 'com.karumi:dexter:6.2.3'
+
+
+//    testImplementation 'junit:junit:'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}
