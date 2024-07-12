@@ -44,6 +44,8 @@ class FilesAdapter(
             listener.onItemClick(position, Constants.ITEM_CLICK, holder.binding.ivLogo)
         })
 
+
+
         holder.binding.executePendingBindings()
     }
 

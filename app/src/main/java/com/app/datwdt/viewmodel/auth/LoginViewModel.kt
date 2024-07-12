@@ -75,7 +75,6 @@ constructor(var authRepository: AuthRepository) : ViewModel() {
         } else {
             true
         }
-
     }
 
     fun callLoginApi() {

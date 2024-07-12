@@ -16,7 +16,7 @@ import com.app.datwdt.viewmodel.auth.LoginViewModel
 import javax.inject.Inject
 
 
-class LoginFragment() : BaseFragment(), View.OnClickListener {
+class LoginFragment: BaseFragment(), View.OnClickListener {
 
     private lateinit var mBinding: FragmentLoginBinding
 

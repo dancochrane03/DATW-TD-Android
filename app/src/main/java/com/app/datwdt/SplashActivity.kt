@@ -28,8 +28,6 @@ class SplashActivity : BaseActivity() {
             } else {
                 navigateToMain()
             }
-
-
         }, 3000)
     }
 
