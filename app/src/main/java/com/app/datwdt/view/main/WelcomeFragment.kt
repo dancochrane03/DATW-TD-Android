@@ -17,8 +17,6 @@ import com.app.datwdt.viewmodel.auth.SecurityCodeCheckViewModel
 import com.app.datwdt.viewmodel.auth.LoginViewModel
 import com.app.datwdt.viewmodel.main.WelcomeViewModel
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.fragment_menu.view.*
-import kotlinx.android.synthetic.main.layout_header.view.*
 import javax.inject.Inject
 
 
@@ -69,7 +67,7 @@ class WelcomeFragment() : BaseFragment(), View.OnClickListener {
         mBinding.tvViewEdit.setOnClickListener(this)
         mBinding.ivEditMyDetails.setOnClickListener(this)
         mBinding.tvEditMyDetails.setOnClickListener(this)
-        mBinding.llHeader.header.btnMenu.setOnClickListener(this)
+        mBinding.header.btnMenu.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {

@@ -15,8 +15,6 @@ import com.app.datwdt.viewmodel.main.CreateNewGroupViewModel
 import com.app.datwdt.viewmodel.main.NeedHelpViewModel
 import com.app.datwdt.viewmodel.main.SuccessCreateGroupViewModel
 import com.app.datwdt.viewmodel.main.WelcomeViewModel
-import kotlinx.android.synthetic.main.fragment_menu.view.*
-import kotlinx.android.synthetic.main.layout_header.view.*
 import javax.inject.Inject
 
 
@@ -53,7 +51,7 @@ class NeedHelpFragment() : BaseFragment(), View.OnClickListener {
 
         mBinding.header.tvTitleMenu.setText(getString(R.string.text_need_help))
         mBinding.tvCantRememberLoginDetails.setOnClickListener(this)
-        mBinding.llHeader.header.btnMenu.setOnClickListener(this)
+        mBinding.header.btnMenu.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {

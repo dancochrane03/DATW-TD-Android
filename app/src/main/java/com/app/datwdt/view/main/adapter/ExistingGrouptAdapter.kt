@@ -11,7 +11,6 @@ import com.app.datwdt.R
 import com.app.datwdt.data.model.main.GroupListResponse
 import com.app.datwdt.databinding.ItemExistingGroupBinding
 import com.app.datwdt.implementor.RecyclerViewItemClickListener2
-import kotlinx.android.synthetic.main.item_existing_group.view.*
 
 class ExistingGrouptAdapter(
     var context: Context,

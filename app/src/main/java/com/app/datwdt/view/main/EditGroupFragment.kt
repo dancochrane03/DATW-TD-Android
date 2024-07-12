@@ -34,8 +34,6 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
-import kotlinx.android.synthetic.main.fragment_menu.view.*
-import kotlinx.android.synthetic.main.layout_header.view.*
 import javax.inject.Inject
 
 
@@ -109,7 +107,7 @@ class EditGroupFragment() : BaseFragment(), View.OnClickListener {
         setAdapter()
         mBinding.btnNotifyCompletion.setOnClickListener(this)
         mBinding.btnAddPhotos.setOnClickListener(this)
-        mBinding.llHeader.header.btnMenu.setOnClickListener(this)
+        mBinding.header.btnMenu.setOnClickListener(this)
     }
 
     private fun getBundleData() {

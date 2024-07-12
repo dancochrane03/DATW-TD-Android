@@ -12,14 +12,6 @@ import com.app.datwdt.constants.Constants
 import com.app.datwdt.data.model.FilesListResponse
 import com.app.datwdt.databinding.ItemEditGroupBinding
 import com.app.datwdt.implementor.RecyclerViewItemClickListener
-import com.app.datwdt.util.UnsafeOkHttpClient
-import com.bumptech.glide.Glide
-import com.bumptech.glide.annotation.GlideModule
-import kotlinx.android.synthetic.main.item_edit_group.view.*
-import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader
-
-import com.bumptech.glide.load.model.GlideUrl
-import java.io.InputStream
 
 
 class FilesAdapter(

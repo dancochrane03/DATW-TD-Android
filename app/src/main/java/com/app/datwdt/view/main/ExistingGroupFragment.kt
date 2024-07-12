@@ -16,8 +16,6 @@ import com.app.datwdt.databinding.FragmentExistingGroupBinding
 import com.app.datwdt.implementor.RecyclerViewItemClickListener2
 import com.app.datwdt.view.main.adapter.ExistingGrouptAdapter
 import com.app.datwdt.viewmodel.main.ExistingGroupViewModel
-import kotlinx.android.synthetic.main.fragment_menu.view.*
-import kotlinx.android.synthetic.main.layout_header.view.*
 import javax.inject.Inject
 
 
@@ -76,7 +74,7 @@ class ExistingGroupFragment() : BaseFragment(), View.OnClickListener,
         mBinding.header.tvTitleMenu.setText(getString(R.string.text_existing_group))
         setAdapter()
         mBinding.btnNotifyCompletion.setOnClickListener(this)
-        mBinding.llHeader.header.btnMenu.setOnClickListener(this)
+        mBinding.header.btnMenu.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {

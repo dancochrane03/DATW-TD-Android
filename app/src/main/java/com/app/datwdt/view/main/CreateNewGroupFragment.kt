@@ -20,8 +20,7 @@ import com.app.datwdt.viewmodel.auth.LoginViewModel
 import com.app.datwdt.viewmodel.main.CreateNewGroupViewModel
 import com.app.datwdt.viewmodel.main.WelcomeViewModel
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.fragment_menu.view.*
-import kotlinx.android.synthetic.main.layout_header.view.*
+
 import javax.inject.Inject
 
 
@@ -64,7 +63,7 @@ class CreateNewGroupFragment() : BaseFragment(), View.OnClickListener {
 
         mBinding.header.tvTitleMenu.setText(getString(R.string.text_create_new_group))
         mBinding.btnCreateGroup.setOnClickListener(this)
-        mBinding.llHeader.header.btnMenu.setOnClickListener(this)
+        mBinding.header.btnMenu.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
