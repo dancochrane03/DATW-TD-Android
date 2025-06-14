@@ -713,7 +713,7 @@ class Utils {
                     packageName!!, 0
                 )
                 context
-                    .getString(packageInfo.applicationInfo.labelRes)
+                    .getString(packageInfo.applicationInfo!!.labelRes)
             } catch (e: Exception) {
                 Log.w("error", "Failed to get version number.$e")
                 ""
@@ -732,7 +732,7 @@ class Utils {
                 val packageInfo: PackageInfo = packageManager.getPackageInfo(
                     packageName!!, 0
                 )
-                packageInfo.versionName
+                packageInfo.versionName!!
             } catch (e: Exception) {
                 // LogUtils.Print("Failed to get version number.",""+e);
                 e.printStackTrace()
