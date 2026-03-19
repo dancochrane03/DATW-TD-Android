@@ -2,20 +2,30 @@ package com.app.datwdt.view.main
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
+import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.datwdt.R
 import com.app.datwdt.ViewModelFactory
 import com.app.datwdt.base.BaseFragment
 import com.app.datwdt.constants.Constants
+import com.app.datwdt.constants.Constants.packageName
 import com.app.datwdt.data.main.Resource
 import com.app.datwdt.data.model.CommonResponse
 import com.app.datwdt.data.model.FilesListResponse
@@ -24,6 +34,7 @@ import com.app.datwdt.databinding.*
 import com.app.datwdt.implementor.RecyclerViewItemClickListener
 import com.app.datwdt.util.DownloadTask
 import com.app.datwdt.util.GlobalMethods
+import com.app.datwdt.util.Utils
 import com.app.datwdt.view.main.adapter.FilesAdapter
 import com.app.datwdt.viewmodel.main.*
 import com.jaiselrahman.filepicker.activity.FilePickerActivity
@@ -34,7 +45,9 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import java.io.File
 import javax.inject.Inject
+import kotlin.collections.toTypedArray
 
 
 class EditGroupFragment() : BaseFragment(), View.OnClickListener {
@@ -49,6 +62,8 @@ class EditGroupFragment() : BaseFragment(), View.OnClickListener {
 
     //adapter
     lateinit var editGrouptAdapter: FilesAdapter
+    private var cameraImageUri: Uri? = null
+
 
     var filesList: ArrayList<FilesListResponse.Result> =
         ArrayList<FilesListResponse.Result>()
@@ -131,19 +146,7 @@ class EditGroupFragment() : BaseFragment(), View.OnClickListener {
 //                replaceFragment(NeedHelpFragment(), true, false, "NeedHelpFragment")
             }
             R.id.btnAddPhotos -> {
-                val intent = Intent(requireActivity(), FilePickerActivity::class.java)
-                intent.putExtra(
-                    FilePickerActivity.CONFIGS, Configurations.Builder()
-                        .setCheckPermission(true)
-                        .setShowImages(true)
-                        .enableImageCapture(true)
-                        .setSingleChoiceMode(true)
-                        .setShowVideos(false)
-                        .enableVideoCapture(false)
-                        .setSkipZeroSizeFiles(true)
-                        .build()
-                )
-                startActivityForResult(intent, Constants.FILE_REQUEST_CODE)
+                openCameraWithPermission()
             }
             R.id.btnMenu -> {
                 var menuDialog = MenuFragment()
@@ -343,7 +346,142 @@ class EditGroupFragment() : BaseFragment(), View.OnClickListener {
         }
     }
 
+    private fun showImagePickerDialog() {
+        val options = arrayOf("Camera", "Gallery")
+        AlertDialog.Builder(requireContext())
+            .setTitle("Select Image")
+            .setItems(options) { _, which ->
+                when (which) {
+                    0 -> openCamera()
+                    1 -> openGallery()
+                }
+            }
+            .show()
+    }
+    private fun openGallery() {
+        galleryLauncher.launch(
+            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+        )
+    }
+    private fun openCamera() {
+        val file = File(requireContext().cacheDir, "camera_${System.currentTimeMillis()}.jpg")
+        cameraImageUri = FileProvider.getUriForFile(
+            requireContext(),
+            requireContext().packageName + ".provider",
+            file
+        )
+        cameraLauncher.launch(cameraImageUri)
+    }
+    private fun openCameraWithPermission() {
+        val permissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            listOf(
+                Manifest.permission.CAMERA,
+                Manifest.permission.READ_MEDIA_IMAGES,
+                Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED,
+            )
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+            listOf(
+                Manifest.permission.CAMERA,
+                Manifest.permission.READ_MEDIA_IMAGES
+            )
+        }else{
+            listOf(
+                Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+            )
+        }
 
+        Dexter.withContext(requireContext())
+            .withPermissions(permissions)
+            .withListener(object : MultiplePermissionsListener {
+
+                override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
+                    report?.let {
+                        if (report.areAllPermissionsGranted()) {
+                            showImagePickerDialog()
+                        }
+                        // ❗ permanently denied → open settings
+                        if (report.isAnyPermissionPermanentlyDenied) {
+                            showSettingsDialog()
+                        } else if (!report.areAllPermissionsGranted()) {
+                            Toast.makeText(
+                                requireContext(),
+                                "Permission required to continue",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    permissions: MutableList<PermissionRequest>?,
+                    token: PermissionToken?
+                ) {
+                    token?.continuePermissionRequest()
+                }
+            })
+            .withErrorListener {
+                Toast.makeText(requireContext(), "Error occurred!", Toast.LENGTH_SHORT).show()
+            }
+            .check()
+    }
+    private val permissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
+
+            val allGranted = results.all { it.value }
+
+            if (allGranted) {
+                showImagePickerDialog()
+            } else {
+                val permanentlyDenied = results.any { (permission, granted) ->
+                    !granted && !shouldShowRequestPermissionRationale(permission)
+                }
+                if (permanentlyDenied) {
+                    showSettingsDialog()
+                } else {
+                    Toast.makeText(requireContext(), "Permission required", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    private fun showSettingsDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Permission Required")
+            .setMessage("Some permissions are permanently denied. Please enable them in Settings.")
+            .setPositiveButton("Open Settings") { _, _ ->
+                val intent = Intent(
+                    Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                    Uri.fromParts("package", requireContext().packageName, null)
+                )
+                startActivity(intent)
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+    private val galleryLauncher =
+        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            if (uri != null) {
+                Log.d("TAG", "Gallery Image: $uri")
+                val filePath = Utils.getFilePathFromUri(uri!!,requireContext())
+                if (!filePath.isNullOrEmpty()) {
+                    editGroupViewModel.strImage.value = filePath
+                    // 👉 API call
+                    editGroupViewModel.addPhotosApi()
+                }
+            }
+        }
+    private val cameraLauncher =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+            if (success && cameraImageUri != null) {
+                Log.d("TAG", "Camera Image: $cameraImageUri")
+                val filePath = Utils.getFilePathFromUri(cameraImageUri!!,requireContext())
+                if (!filePath.isNullOrEmpty()) {
+                    editGroupViewModel.strImage.value = filePath
+                    // 👉 API call
+                    editGroupViewModel.addPhotosApi()
+                }
+            }
+        }
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

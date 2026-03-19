@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.app.datwdt.R
 import com.app.datwdt.ViewModelFactory
 import com.app.datwdt.base.BaseFragment
@@ -69,7 +70,11 @@ class CreateNewGroupFragment() : BaseFragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnCreateGroup -> {
-                createNewGroupViewModel.createGroupApi()
+                if (mBinding.edtUsername.text?.isNotEmpty() == true){
+                    createNewGroupViewModel.createGroupApi()
+                }else{
+                    Toast.makeText(requireContext(), resources.getString(R.string.please_enter_group_name), Toast.LENGTH_SHORT).show()
+                }
             }
             R.id.btnMenu -> {
                 var menuDialog = MenuFragment()

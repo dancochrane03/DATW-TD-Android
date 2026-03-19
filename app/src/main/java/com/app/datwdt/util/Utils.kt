@@ -41,6 +41,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.app.datwdt.R
@@ -1452,5 +1453,26 @@ class Utils {
             c.add(Calendar.YEAR, 1)
             return c.timeInMillis
         }
+        fun getFilePathFromUri(uri: Uri,ctx: Context): String? {
+            try {
+                val inputStream = ctx.contentResolver.openInputStream(uri)
+                val file = File(ctx.cacheDir, "picked_${System.currentTimeMillis()}.jpg")
+
+                val outputStream = FileOutputStream(file)
+
+                inputStream?.copyTo(outputStream)
+
+                inputStream?.close()
+                outputStream.close()
+
+                return file.absolutePath
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            return null
+        }
     }
+
 }

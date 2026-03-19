@@ -1,9 +1,13 @@
 package com.app.datwdt.view.main
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.widget.Toast
 import androidx.core.view.GravityCompat
 import com.app.datwdt.R
@@ -35,50 +39,74 @@ class MainActivity : BaseActivity(), GlobalMethods.DialogListener2 {
 
     override fun onStart() {
         super.onStart()
-        Dexter.withContext(this@MainActivity)
-            .withPermissions(
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.CAMERA
-            )
-            .withListener(object : MultiplePermissionsListener {
-                override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
-                    report?.let {
-                        if (report.areAllPermissionsGranted()) {
-                           /* Toast.makeText(
-                                this@MainActivity,
-                                "Permission granted successfully",
-                                Toast.LENGTH_SHORT
-                            ).show();*/
-                        }else{
-                            Toast.makeText(
-                                this@MainActivity,
-                                "Please grant permission from settings of app.",
-                                Toast.LENGTH_SHORT
-                            ).show();
-                        }
-                    }
-                }
-
-                override fun onPermissionRationaleShouldBeShown(
-                    permissions: MutableList<PermissionRequest>?,
-                    token: PermissionToken?
-                ) {
-                    // Remember to invoke this method when the custom rationale is closed
-                    // or just by default if you don't want to use any custom rationale.
-                    token?.continuePermissionRequest()
-                }
-            })
-            .withErrorListener {
-                Toast.makeText(
-                    this@MainActivity,
-                    "Permission denied.",
-                    Toast.LENGTH_SHORT
-                ).show();
-            }
-            .check()
+//        val permissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+//            listOf(
+//                Manifest.permission.CAMERA,
+//                Manifest.permission.READ_MEDIA_IMAGES,
+//                Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED,
+//            )
+//        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+//            listOf(
+//                Manifest.permission.CAMERA,
+//                Manifest.permission.READ_MEDIA_IMAGES
+//            )
+//        }else{
+//            listOf(
+//                Manifest.permission.CAMERA,
+//                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//                Manifest.permission.READ_EXTERNAL_STORAGE,
+//            )
+//        }
+//
+//        Dexter.withContext(this@MainActivity)
+//            .withPermissions(permissions)
+//            .withListener(object : MultiplePermissionsListener {
+//
+//                override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
+//                    report?.let {
+//                        if (report.areAllPermissionsGranted()) {
+//                            // ✅ All permissions granted → NOTHING DO
+//                            return
+//                        }
+//                        // ❗ permanently denied → open settings
+//                        if (report.isAnyPermissionPermanentlyDenied) {
+//                            showSettingsDialog()
+//                        } else if (!report.areAllPermissionsGranted()) {
+//                            Toast.makeText(
+//                                this@MainActivity,
+//                                "Permission required to continue",
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//                        }
+//                    }
+//                }
+//
+//                override fun onPermissionRationaleShouldBeShown(
+//                    permissions: MutableList<PermissionRequest>?,
+//                    token: PermissionToken?
+//                ) {
+//                    token?.continuePermissionRequest()
+//                }
+//            })
+//            .withErrorListener {
+//                Toast.makeText(this, "Error occurred!", Toast.LENGTH_SHORT).show()
+//            }
+//            .check()
     }
+    private fun showSettingsDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Permission Required")
+            .setMessage("Please enable permission from Settings")
+            .setPositiveButton("Go to Settings") { _, _ ->
 
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                val uri = Uri.fromParts("package", packageName, null)
+                intent.data = uri
+                startActivity(intent)
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
     companion object {
         fun newIntent(context: Context): Intent {
             return Intent(context, MainActivity::class.java)

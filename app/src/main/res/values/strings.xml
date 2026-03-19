@@ -65,5 +65,6 @@
     <string name="text_are_you_sure_you_want_to_logout">Are you sure you want to logout?</string>
     <string name="text_exit_app">Are you sure you want to exit application?</string>
     <string name="admin_login_error">No access!!! Please use iOS application</string>
+    <string name="please_enter_group_name">Please enter group name</string>
 
 </resources>

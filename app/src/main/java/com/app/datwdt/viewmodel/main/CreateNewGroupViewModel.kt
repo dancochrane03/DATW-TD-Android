@@ -58,7 +58,7 @@ constructor(var mainRepository: MainRepository) : ViewModel() {
 
     fun createGroupApi() {
         val params = HashMap<String, String>()
-        params[Constants.group_nm] = _groupname.value.toString()
+        params[Constants.group_nm] = _groupname.value!!
 
         if(preferences.getString(Constants.user_role).equals("admin",true)){
             params[Constants.entity_id] = preferences.getString(Constants.entity_id).toString()
